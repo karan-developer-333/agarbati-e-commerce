@@ -1,174 +1,67 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import { StarIcon } from './SvgDecorations'
 
-export default function ProductCard({ product, onAddToCart }) {
-  const [count, setCount] = useState(0)
+const boxStyles = {
+  'Divine Sandalwood Agarbatti': { bg: 'from-[#2D1B5E] to-[#1E0F47]', label: 'SD' },
+  'Royal Rose Agarbatti': { bg: 'from-[#8B1A1A] to-[#5C1010]', label: 'RR' },
+  'Mogra Bliss Agarbatti': { bg: 'from-[#1B5E20] to-[#0D3310]', label: 'MB' },
+  'Lavender Calm Agarbatti': { bg: 'from-[#5B4E9E] to-[#3A2D7A]', label: 'LC' },
+  'Oudh Supreme Agarbatti': { bg: 'from-[#1A1A1A] to-[#000000]', label: 'OS' },
+}
+
+export default function ProductCard({ product, index }) {
+  const [qty, setQty] = useState(0)
   const cardRef = useRef(null)
-  const imgRef = useRef(null)
 
-  const wholePrice = Math.floor(product.price)
-  const decimalPart = (product.price % 1).toFixed(2).slice(1)
+  const style = boxStyles[product.name] || boxStyles['Divine Sandalwood Agarbatti']
 
-  const handleAdd = () => {
-    setCount(1)
-    onAddToCart && onAddToCart({ ...product, quantity: 1 })
+  useEffect(() => {
+    gsap.fromTo(cardRef.current,
+      { y: 30, opacity: 0, scale: 0.9 },
+      { y: 0, opacity: 1, scale: 1, duration: 0.4, delay: index * 0.06, ease: 'power2.out',
+        scrollTrigger: { trigger: cardRef.current, start: 'top 85%' }
+      }
+    )
+  }, [index])
 
-    // Image scale pulse
-    gsap.timeline()
-      .to(imgRef.current, { scale: 1.08, duration: 0.2, ease: 'power2.out' })
-      .to(imgRef.current, { scale: 1, duration: 0.3, ease: 'power2.inOut' })
-
-    // Fly to cart
-    const card = cardRef.current
-    if (!card) return
-    const particle = document.createElement('div')
-    particle.style.cssText = `
-      position:fixed; width:10px; height:10px; border-radius:50%;
-      background:#111; pointer-events:none; z-index:9999;
-      left:${card.getBoundingClientRect().left + card.getBoundingClientRect().width / 2 - 5}px;
-      top:${card.getBoundingClientRect().top + 30}px;
-    `
-    document.body.appendChild(particle)
-    const navbar = document.getElementById('navbar')
-    const navRect = navbar?.getBoundingClientRect() || { left: window.innerWidth - 60, top: 20 }
-    gsap.to(particle, {
-      x: navRect.right - 60 - parseFloat(particle.style.left),
-      y: navRect.top + 20 - parseFloat(particle.style.top),
-      scale: 0,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power3.in',
-      onComplete: () => particle.remove(),
-    })
-  }
-
-  const handleIncrement = () => {
-    const newCount = count + 1
-    setCount(newCount)
-    onAddToCart && onAddToCart({ ...product, quantity: newCount })
-  }
-  const handleDecrement = () => {
-    const newCount = Math.max(0, count - 1)
-    setCount(newCount)
-  }
-
-  const handleImgHover = (entering) => {
-    gsap.to(imgRef.current, {
-      scale: entering ? 1.06 : 1,
-      duration: 0.45,
-      ease: 'power2.out',
-    })
-  }
+  const handleAdd = () => setQty(1)
 
   return (
-    <div
-      ref={cardRef}
-      style={{
-        background: 'white',
-        border: '1px solid #EBEBEB',
-        borderRadius: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        cursor: 'pointer',
-        transition: 'border-color 0.25s',
-        overflow: 'hidden',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--gold)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#EBEBEB' }}
-    >
-      {/* Product image */}
-      <div style={{
-        width: '100%', aspectRatio: '1/1',
-        overflow: 'hidden', background: '#F8F8F8',
-        position: 'relative',
-      }}
-        onMouseEnter={() => handleImgHover(true)}
-        onMouseLeave={() => handleImgHover(false)}
-      >
-        <img
-          ref={imgRef}
-          src={product.image}
-          alt={product.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          onError={(e) => {
-            e.target.style.display = 'none'
-            e.target.parentElement.style.background = '#F5F5F5'
-          }}
-        />
-        {/* Discount tag if present */}
-        {product.discount && (
-          <div style={{
-            position: 'absolute', top: 10, left: 10,
-            background: 'var(--dark-maroon)', color: 'white',
-            fontSize: 9, fontWeight: 600, fontFamily: 'Poppins',
-            padding: '3px 7px', borderRadius: 2,
-            letterSpacing: '0.5px',
-          }}>
-            -{product.discount}%
-          </div>
-        )}
-      </div>
-
-      {/* Info */}
-      <div style={{ padding: '12px 12px 14px', display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
-        <div style={{ fontSize: 12, color: '#888', fontFamily: 'Poppins', letterSpacing: '0.3px' }}>{product.brand || 'Sugandh'}</div>
-
-        <div style={{
-          fontSize: 13, fontWeight: 500, color: 'var(--charcoal)',
-          lineHeight: 1.4, fontFamily: 'Poppins',
-          display: '-webkit-box', WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical', overflow: 'hidden',
-        }}>
-          {product.name}
+    <div ref={cardRef} className="group bg-card-bg rounded-xl border border-border-cream p-3 flex flex-col items-center gap-2 hover:shadow-lg transition-shadow duration-300 relative">
+      <div className={`w-full aspect-[3/4] rounded-lg bg-gradient-to-br ${style.bg} p-2 flex items-center justify-center relative overflow-hidden`}>
+        <div className="absolute inset-0 opacity-[0.08] rounded-lg">
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <rect x="30" y="10" width="40" height="80" rx="3" stroke="white" strokeWidth="0.5" fill="none" />
+            <rect x="35" y="20" width="30" height="50" rx="2" stroke="white" strokeWidth="0.3" fill="none" />
+            <line x1="35" y1="25" x2="65" y2="25" stroke="white" strokeWidth="0.3" />
+          </svg>
         </div>
-
-        <div style={{ fontSize: 11, color: '#AAA', fontFamily: 'Poppins' }}>{product.weight}</div>
-
-        {/* Price + Add */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-            <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--charcoal)', fontFamily: 'Poppins' }}>₹{wholePrice}</span>
-            <span style={{ fontSize: 10, fontWeight: 600, color: '#555', verticalAlign: 'super' }}>{decimalPart}</span>
-          </div>
-
-          {count === 0 ? (
-            <button
-              onClick={(e) => { e.stopPropagation(); handleAdd() }}
-              style={{
-                width: 30, height: 30,
-                background: 'var(--deep-saffron)', color: 'white',
-                border: 'none', borderRadius: 2,
-                fontSize: 18, cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontWeight: 300, flexShrink: 0,
-                transition: 'opacity 0.2s',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.75' }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
-              title="Add to cart"
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </button>
-          ) : (
-            <div style={{
-              display: 'flex', alignItems: 'center',
-              border: '1px solid #E5E5E5', borderRadius: 2, overflow: 'hidden',
-            }}>
-              <button
-                onClick={(e) => { e.stopPropagation(); handleDecrement() }}
-                style={{ width: 26, height: 26, background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: 'var(--charcoal)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >−</button>
-              <span style={{ width: 22, textAlign: 'center', fontSize: 12, fontWeight: 600, color: 'var(--charcoal)' }}>{count}</span>
-              <button
-                onClick={(e) => { e.stopPropagation(); handleIncrement() }}
-                style={{ width: 26, height: 26, background: 'var(--deep-saffron)', border: 'none', cursor: 'pointer', fontSize: 14, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >+</button>
-            </div>
-          )}
+        <div className="text-center">
+          <div className="font-serif text-2xl font-bold text-gold">🪔</div>
+          <div className="text-white/30 text-[8px] mt-1 uppercase tracking-wider">{style.label}</div>
         </div>
       </div>
+
+      <div className="flex items-center gap-1">
+        <StarIcon className="w-3 h-3 text-gold" />
+        <span className="text-[11px] font-bold text-text-primary">{product.rating}</span>
+        <span className="text-[10px] text-text-secondary">({product.reviews})</span>
+      </div>
+
+      <h3 className="text-[12px] font-medium text-text-primary text-center leading-tight line-clamp-2">{product.name}</h3>
+
+      <span className="text-[15px] font-bold text-text-primary">₹{product.price}</span>
+
+      {qty === 0 ? (
+        <button onClick={handleAdd} className="w-9 h-9 rounded-full bg-primary text-white text-xl font-light flex items-center justify-center hover:bg-primary-dark transition-colors active:scale-95 absolute bottom-3 right-3">+</button>
+      ) : (
+        <div className="flex items-center gap-2 bg-[#F0ECE4] rounded-full px-2.5 py-1">
+          <button onClick={() => setQty(q => Math.max(0, q - 1))} className="w-5 h-5 rounded-full bg-primary text-white text-[10px] flex items-center justify-center">−</button>
+          <span className="text-xs font-semibold text-text-primary w-4 text-center">{qty}</span>
+          <button onClick={() => setQty(q => q + 1)} className="w-5 h-5 rounded-full bg-primary text-white text-[10px] flex items-center justify-center">+</button>
+        </div>
+      )}
     </div>
   )
 }

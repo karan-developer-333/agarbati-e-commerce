@@ -1,173 +1,75 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
+import { ShieldIcon, TruckIcon, HeartIcon, HeadphonesIcon, DiyaIcon, InstagramIcon, FacebookIcon, PinterestIcon } from './SvgDecorations'
 
-const footerLinks = {
-  'Company': ['About Us', 'Our Story', 'Sustainability', 'Careers', 'Press'],
-  'Shop': ['Agarbati Sticks', 'Dhoop Cones', 'Sambrani', 'Pooja Kits', 'Gift Sets'],
-  'Support': ['Track Order', 'Returns', 'Shipping Policy', 'Bulk Orders', 'FAQs'],
-  'Contact': ['+91 98765 43210', 'hello@sugandh.in', 'Mon–Sat 9am–6pm', 'Mumbai, India'],
-}
-
-const socials = [
-  { label: 'Instagram', d: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' },
-  { label: 'Twitter', d: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.75l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' },
-  { label: 'YouTube', d: 'M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z' },
+const trustItems = [
+  { icon: ShieldIcon, label: '100% Original Products' },
+  { icon: TruckIcon, label: 'Easy Returns' },
+  { icon: HeartIcon, label: 'Quality Assured' },
+  { icon: HeadphonesIcon, label: 'Dedicated Support' },
 ]
 
 export default function Footer() {
-  const footerRef = useRef(null)
-  const colsRef = useRef([])
-  const bottomRef = useRef(null)
+  const ref = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(colsRef.current,
-        { y: 22, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: footerRef.current, start: 'top 90%', once: true },
+      gsap.fromTo('.footer-content',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out',
+          scrollTrigger: { trigger: ref.current, start: 'top 85%' }
         }
       )
-      gsap.fromTo(bottomRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1, duration: 0.5, delay: 0.35, ease: 'power2.out',
-          scrollTrigger: { trigger: footerRef.current, start: 'top 85%', once: true },
-        }
-      )
-    }, footerRef)
+    }, ref)
     return () => ctx.revert()
   }, [])
 
   return (
-    <footer ref={footerRef} style={{ background: 'var(--dark-maroon)', marginTop: 0 }}>
-      <div style={{ maxWidth: 780, margin: '0 auto', padding: '52px 24px 0' }}>
-
-        {/* Top — brand + tagline */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 40, flexWrap: 'wrap', gap: 20 }}>
-          <div>
-            <div style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 26, fontWeight: 600, color: 'white', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: 8 }}>
-              Sugandh
-            </div>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontFamily: 'Poppins', margin: 0, maxWidth: 240, lineHeight: 1.7, fontWeight: 300 }}>
-              Rooted in tradition. Premium agarbatti & pooja essentials, delivered to your home.
-            </p>
-          </div>
-
-          {/* Newsletter */}
-          <div style={{ minWidth: 240 }}>
-            <div style={{ fontSize: 11, fontWeight: 500, color: 'rgba(255,255,255,0.6)', fontFamily: 'Poppins', letterSpacing: '0.5px', marginBottom: 10, textTransform: 'uppercase' }}>
-              Newsletter
-            </div>
-            <div style={{ display: 'flex', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 2, overflow: 'hidden' }}>
-              <input
-                type="email"
-                placeholder="Your email address"
-                style={{
-                  flex: 1, padding: '10px 14px',
-                  background: 'rgba(255,255,255,0.06)',
-                  border: 'none', outline: 'none',
-                  color: 'white', fontSize: 12, fontFamily: 'Poppins',
-                }}
-              />
-              <button style={{
-                padding: '10px 16px',
-                background: 'white', color: '#111',
-                border: 'none', cursor: 'pointer',
-                fontSize: 11, fontWeight: 600, fontFamily: 'Poppins',
-                letterSpacing: '0.5px', whiteSpace: 'nowrap',
-                transition: 'opacity 0.2s',
-              }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.85' }}
-                onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
-              >
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginBottom: 36 }} />
-
-        {/* Link columns */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '28px 20px' }} className="md:grid-cols-4">
-          {Object.entries(footerLinks).map(([title, links], i) => (
-            <div key={title} ref={(el) => { colsRef.current[i] = el }} style={{ opacity: 0 }}>
-              <h4 style={{ color: 'white', fontWeight: 500, fontSize: 12, marginBottom: 16, fontFamily: 'Poppins', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
-                {title}
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, fontFamily: 'Poppins', fontWeight: 300, textDecoration: 'none', transition: 'color 0.18s' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.85)' }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.4)' }}
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom */}
-        <div
-          ref={bottomRef}
-          style={{
-            opacity: 0,
-            borderTop: '1px solid rgba(255,255,255,0.07)',
-            marginTop: 40,
-            paddingTop: 20, paddingBottom: 28,
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
-          }}
-        >
-          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', fontFamily: 'Poppins', fontWeight: 300 }}>
-            © 2026 Sugandh. All rights reserved.
-          </span>
-
-          {/* Social icons */}
-          <div style={{ display: 'flex', gap: 8 }}>
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                href="#"
-                aria-label={s.label}
-                style={{
-                  width: 30, height: 30, borderRadius: '50%',
-                  background: 'rgba(255,255,255,0.06)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  transition: 'background 0.2s, border-color 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'white'
-                  e.currentTarget.style.borderColor = 'white'
-                  e.currentTarget.querySelector('svg').setAttribute('fill', '#111')
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
-                  e.currentTarget.querySelector('svg').setAttribute('fill', 'rgba(255,255,255,0.7)')
-                }}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)" style={{ transition: 'fill 0.2s' }}>
-                  <path d={s.d} />
-                </svg>
-              </a>
+    <footer ref={ref}>
+      <div className="bg-bg-page border-y border-border-cream py-6">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
+            {trustItems.map((item, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <item.icon className="w-5 h-5 text-gold shrink-0" />
+                <span className="text-sm font-medium text-text-primary">{item.label}</span>
+                {i < trustItems.length - 1 && <div className="w-px h-6 bg-border-cream ml-2 hidden md:block" />}
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Bottom line */}
-      <div style={{ height: 2, background: 'linear-gradient(90deg, #333 0%, rgba(255,255,255,0.15) 50%, #333 100%)' }} />
+      <div className="bg-primary">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12">
+          <div className="footer-content grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 mb-4">
+                <DiyaIcon className="w-6 h-6 text-gold" />
+                <span className="text-white font-serif font-bold text-lg">Sugandh</span>
+              </div>
+              <p className="text-white/50 text-xs leading-relaxed">Bringing divine fragrance into every home with premium quality agarbatti made with devotion and natural ingredients.</p>
+            </div>
+            <div>
+              <h4 className="text-white/80 font-medium text-sm mb-4 tracking-wide">Quick Links</h4>
+              <ul className="space-y-2.5">{[['Home','#home'],['Shop','#shop'],['Best Sellers','#best-sellers'],['About Us','#about']].map(([l,h]) => (<li key={l}><a href={h} className="text-white/40 text-xs hover:text-gold transition-colors">{l}</a></li>))}</ul>
+            </div>
+            <div>
+              <h4 className="text-white/80 font-medium text-sm mb-4 tracking-wide">Categories</h4>
+              <ul className="space-y-2.5">{['Agarbatti','Dhoop','Incense Cones','Gift Packs'].map(l => (<li key={l}><a href="#" className="text-white/40 text-xs hover:text-gold transition-colors">{l}</a></li>))}</ul>
+            </div>
+            <div>
+              <h4 className="text-white/80 font-medium text-sm mb-4 tracking-wide">Contact</h4>
+              <ul className="space-y-2.5">{['support@sugandh.com','+91 98765 43210','Mumbai, India'].map(l => (<li key={l} className="text-white/40 text-xs">{l}</li>))}</ul>
+              <div className="flex gap-3 mt-4">{[InstagramIcon, FacebookIcon, PinterestIcon].map((Icon, i) => (<a key={i} href="#" className="text-white/40 hover:text-gold transition-colors"><Icon className="w-4 h-4" /></a>))}</div>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-white/10 py-6 text-center">
+          <p className="text-white/30 text-xs">&copy; 2026 Sugandh. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
   )
 }
