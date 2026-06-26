@@ -32,14 +32,14 @@ export default function ShopByFragrance() {
         <h2 className="font-serif text-xl md:text-[22px] font-bold text-primary">Shop by Fragrance</h2>
         <a href="#all" className="text-gold text-[13px] font-medium hover:text-primary transition-colors flex items-center gap-1">View all <span className="text-base leading-none">→</span></a>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
         {fragrances.map((f, i) => (
           <div key={i} className="fragrance-card group cursor-pointer">
-            <div className="rounded-xl border border-border-cream bg-card-bg p-3 flex flex-col items-center gap-2.5 hover:shadow-md hover:border-gold/50 transition-all duration-300">
+            <div className="rounded-xl border border-border-cream bg-card-bg p-2.5 sm:p-3 flex flex-col items-center gap-2.5 hover:shadow-md hover:border-gold/50 transition-all duration-300">
               <div className="w-full aspect-square rounded-full overflow-hidden border border-border-cream">
                 <img src={f.image} alt={f.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
-              <span className="text-[13px] font-medium text-text-primary">{f.name}</span>
+              <span className="text-xs sm:text-[13px] font-semibold text-text-primary text-center leading-tight">{f.name}</span>
             </div>
           </div>
         ))}

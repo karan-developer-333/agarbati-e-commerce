@@ -43,16 +43,16 @@ export default function HeroBanner() {
 
   return (
     <section ref={sectionRef} id="home" className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #F5EFE3 0%, #EDE4D0 100%)' }}>
-      <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="flex flex-col lg:flex-row items-center gap-10" style={{ padding: '0 20px' }}>
-          <div className="flex-1 space-y-5 lg:max-w-[45%]">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-10 lg:py-16">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-10">
+          <div className="flex-1 space-y-5 lg:max-w-[45%] w-full">
             <div className="hero-badge inline-flex items-center gap-2">
               <span className="w-8 h-px bg-gold/60" />
-              <span className="text-gold text-[11px] uppercase tracking-[0.12em] font-medium">Pure Fragrance. Positive Vibes.</span>
+              <span className="text-gold text-[10px] sm:text-[11px] uppercase tracking-[0.12em] font-semibold">Pure Fragrance. Positive Vibes.</span>
               <span className="w-8 h-px bg-gold/60" />
             </div>
 
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-[52px] font-bold text-primary leading-[1.1]">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-primary leading-[1.15] lg:leading-[1.1]">
               <span className="hero-word inline-block">Bring</span>{' '}
               <span className="hero-word inline-block">Divine</span>{' '}
               <span className="hero-word inline-block">Fragrance</span>{' '}
@@ -61,52 +61,54 @@ export default function HeroBanner() {
               <span className="hero-word inline-block">Home</span>
             </h1>
 
-            <p className="hero-desc text-text-secondary text-[15px] max-w-md leading-relaxed">
+            <p className="hero-desc text-text-secondary text-[14px] sm:text-[15px] max-w-md leading-relaxed">
               Premium quality agarbatti for your peaceful prayers and beautiful moments.
             </p>
 
-            <div className="hero-cta">
-              <a href="#shop" className="inline-flex items-center gap-2 bg-primary text-white px-8 py-[14px] rounded-full font-semibold text-sm hover:bg-primary-dark transition-all shadow-lg hover:shadow-primary/30">
+            <div className="hero-cta pt-2">
+              <a href="#shop" className="inline-flex items-center gap-2 bg-primary text-white px-7 sm:px-8 py-3 sm:py-[14px] rounded-full font-semibold text-xs sm:text-sm hover:bg-primary-dark transition-all shadow-lg hover:shadow-primary/30 active:scale-98">
                 Shop Now
                 <span className="text-lg leading-none">→</span>
               </a>
             </div>
 
-            <div className="hero-features flex flex-wrap gap-x-6 gap-y-2 pt-2">
-              <div className="flex items-center gap-2">
+            <div className="hero-features flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-3 pt-4 text-[12px] text-text-secondary">
+              <div className="flex items-center gap-2 shrink-0">
                 <LeafIcon className="w-4 h-4 text-gold" />
-                <span className="text-[12px] text-text-secondary">Natural Ingredients</span>
+                <span>Natural Ingredients</span>
               </div>
-              <div className="w-px h-4 bg-border-cream self-center" />
-              <div className="flex items-center gap-2">
+              <div className="hidden sm:block w-px h-3.5 bg-border-cream self-center" />
+              <div className="flex items-center gap-2 shrink-0">
                 <HeartIcon className="w-4 h-4 text-gold" />
-                <span className="text-[12px] text-text-secondary">Long Lasting Fragrance</span>
+                <span>Long Lasting Fragrance</span>
               </div>
-              <div className="w-px h-4 bg-border-cream self-center" />
-              <div className="flex items-center gap-2">
+              <div className="hidden sm:block w-px h-3.5 bg-border-cream self-center" />
+              <div className="flex items-center gap-2 shrink-0">
                 <IncenseIcon className="w-4 h-4 text-gold" />
-                <span className="text-[12px] text-text-secondary">Made With Devotion</span>
+                <span>Made With Devotion</span>
               </div>
             </div>
           </div>
 
-          <div className="flex-1 flex justify-center relative lg:max-w-[55%]">
-            <div className="hero-img relative">
+          <div className="flex-1 flex justify-center relative w-full lg:max-w-[55%] mt-6 lg:mt-0">
+            <div className="hero-img relative w-full max-w-md sm:max-w-lg flex justify-center px-6">
               <img
                 ref={imgRef}
                 src="/assets/hero_banner_render.png"
                 alt="Premium Sandalwood Incense"
-                className="w-full max-w-lg h-auto object-contain drop-shadow-xl"
+                className="w-full h-auto object-contain drop-shadow-xl select-none"
                 onError={(e) => { e.target.style.display = 'none' }}
               />
-              <div className="hero-controls absolute -right-2 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
-                <button className="w-9 h-9 rounded-full border border-border-cream bg-white flex items-center justify-center text-text-secondary hover:text-primary transition-colors text-sm">&lt;</button>
-                <button className="w-9 h-9 rounded-full border border-border-cream bg-white flex items-center justify-center text-text-secondary hover:text-primary transition-colors text-sm">&gt;</button>
-                <div className="flex gap-1.5 mt-1">
-                  <span className="w-2 h-2 rounded-full bg-primary" />
-                  <span className="w-2 h-2 rounded-full bg-border-cream" />
-                  <span className="w-2 h-2 rounded-full bg-border-cream" />
-                </div>
+              
+              {/* Left & Right Navigation Arrows */}
+              <button className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full border border-border-cream/80 bg-white/90 backdrop-blur-sm flex items-center justify-center text-text-secondary hover:text-primary transition-all text-sm shadow-sm hover:shadow active:scale-90">&lt;</button>
+              <button className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full border border-border-cream/80 bg-white/90 backdrop-blur-sm flex items-center justify-center text-text-secondary hover:text-primary transition-all text-sm shadow-sm hover:shadow active:scale-90">&gt;</button>
+              
+              {/* Dot Indicators */}
+              <div className="absolute bottom-2 right-8 flex gap-1.5 z-10 bg-white/40 backdrop-blur-[2px] px-2 py-1 rounded-full">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span className="w-2 h-2 rounded-full bg-border-cream" />
+                <span className="w-2 h-2 rounded-full bg-border-cream" />
               </div>
             </div>
           </div>

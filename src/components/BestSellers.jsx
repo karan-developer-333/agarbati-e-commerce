@@ -32,7 +32,7 @@ export default function BestSellers() {
         <h2 className="font-serif text-xl md:text-[22px] font-bold text-primary">Best Sellers</h2>
         <a href="#all" className="text-gold text-[13px] font-medium hover:text-primary transition-colors flex items-center gap-1">View all <span className="text-base leading-none">→</span></a>
       </div>
-      <div className="grid grid-cols-5 gap-2.5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 sm:gap-3.5">
         {products.map((p, i) => (
           <ProductCard key={i} product={p} index={i} />
         ))}

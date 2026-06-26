@@ -45,6 +45,12 @@ html.lenis { height: auto; }
   100% { transform: translateY(-40px) rotate(30deg); opacity: 0; }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .smoke-wisp { animation: smokeRise 4s ease-in-out infinite; transform-origin: bottom center; }
 .incense-glow { animation: glowPulse 1.6s ease-in-out infinite; }
 .petal { animation: petalFloat 8s ease-in-out infinite; }
+
