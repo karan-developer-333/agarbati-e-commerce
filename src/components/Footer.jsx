@@ -29,12 +29,14 @@ export default function Footer() {
     <footer ref={ref}>
       <div className="bg-[#FDFBF6] border-y border-border-cream py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-6 md:gap-x-10 md:gap-y-4">
+          <div className="flex flex-wrap justify-center items-center gap-x-6 md:gap-x-8 lg:gap-x-12 gap-y-4">
             {trustItems.map((item, i) => (
-              <div key={i} className="flex items-center justify-center sm:justify-start gap-3 w-full md:w-auto">
-                <item.icon className="w-5 h-5 text-gold shrink-0" />
-                <span className="text-xs sm:text-sm font-semibold text-text-primary text-center sm:text-left">{item.label}</span>
-                {i < trustItems.length - 1 && <div className="w-px h-6 bg-border-cream ml-2 hidden md:block" />}
+              <div key={i} className="flex items-center gap-4 md:gap-6 lg:gap-8">
+                <div className="flex items-center gap-2.5">
+                  <item.icon className="w-5 h-5 text-gold shrink-0" />
+                  <span className="text-xs sm:text-sm font-semibold text-text-primary">{item.label}</span>
+                </div>
+                {i < trustItems.length - 1 && <div className="hidden md:block w-px h-5 bg-border-cream" />}
               </div>
             ))}
           </div>

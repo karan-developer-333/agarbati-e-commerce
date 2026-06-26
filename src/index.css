@@ -54,3 +54,67 @@ html.lenis { height: auto; }
 .incense-glow { animation: glowPulse 1.6s ease-in-out infinite; }
 .petal { animation: petalFloat 8s ease-in-out infinite; }
 
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+
+/* Product/Fragrance card hover micro-interaction — scoped to cards only */
+.product-card, .fragrance-card {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
+}
+.product-card:hover, .fragrance-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(45, 27, 94, 0.06), 0 2px 6px rgba(197, 168, 128, 0.1);
+  border-color: rgba(197, 168, 128, 0.5);
+}
+
+/* Image zoom inside product/fragrance cards */
+.product-card:hover img, .fragrance-card:hover img {
+  transform: scale(1.06);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Custom interactive active states */
+.active-scale:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* Badge count wiggle */
+.cart-badge {
+  animation: none;
+}
+.cart-badge.bump {
+  animation: wiggle 0.4s ease-in-out;
+}
+
+/* Input elements focus effect */
+input:focus, select:focus, textarea:focus {
+  border-color: #C9963A !important;
+  box-shadow: 0 0 0 3px rgba(201, 150, 58, 0.15) !important;
+  transition: all 0.2s ease;
+}
+
+/* Heart button interactive bounce */
+.wishlist-btn {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease, background-color 0.2s ease;
+}
+.wishlist-btn:hover {
+  transform: scale(1.15);
+}
+.wishlist-btn:active {
+  transform: scale(0.85);
+}
+
+
+

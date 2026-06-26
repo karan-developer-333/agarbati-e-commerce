@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { DiyaIcon, SearchIcon, UserIcon, CartIcon } from './SvgDecorations'
+import { useCart } from '../context/CartContext'
+import { useUser } from '../context/UserContext'
 
 export default function Navbar() {
   const navRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
+  const { itemCount, setIsCartOpen } = useCart()
+  const { setIsProfileOpen } = useUser()
 
   useEffect(() => {
     gsap.fromTo(navRef.current,
@@ -48,11 +52,21 @@ export default function Navbar() {
 
           {/* Action Icons + Mobile Hamburger */}
           <div className="flex items-center gap-3 lg:gap-4">
-            <UserIcon className="w-[22px] h-[22px] text-primary cursor-pointer hover:text-gold transition-colors hidden sm:block" />
-            <div className="relative cursor-pointer">
+            <button
+              onClick={() => setIsProfileOpen(true)}
+              className="relative cursor-pointer focus:outline-none p-1"
+              aria-label="Open profile"
+            >
+              <UserIcon className="w-[22px] h-[22px] text-primary hover:text-gold transition-colors" />
+            </button>
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="relative cursor-pointer focus:outline-none p-1"
+              aria-label="Open cart"
+            >
               <CartIcon className="w-[22px] h-[22px] text-primary hover:text-gold transition-colors" />
-              <span className="cart-badge absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">3</span>
-            </div>
+              {itemCount > 0 && <span className="cart-badge absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">{itemCount}</span>}
+            </button>
 
             {/* Hamburger Toggle Button */}
             <button
@@ -132,6 +146,15 @@ export default function Navbar() {
               >
                 Contact
               </a>
+              <button
+                onClick={() => {
+                  setIsOpen(false)
+                  setIsProfileOpen(true)
+                }}
+                className="text-text-secondary hover:text-primary text-sm font-medium pl-2 text-left transition-colors flex items-center gap-1.5 cursor-pointer"
+              >
+                👤 My Profile
+              </button>
             </nav>
           </div>
         </div>
